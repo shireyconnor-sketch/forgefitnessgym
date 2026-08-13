@@ -1,0 +1,928 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>ForgeFit</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#0a0d0c;--panel:#111614;--panel2:#161d1a;--border:#26302c;--text:#f2f7f4;--muted:#8c9b94;--accent:#b6ff4a;--danger:#ff6f6f}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 70% -10%,#1b2b20 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}.hidden{display:none!important}button,input,select,textarea{font:inherit}button{cursor:pointer}.primary,.secondary,.ghost,.chip{border-radius:10px;padding:11px 16px}.primary{border:1px solid var(--accent);background:var(--accent);color:#0e130d;font-weight:800}.secondary{border:1px solid #3d4b45;background:#202925;color:var(--text);font-weight:700}.ghost{border:1px solid var(--border);background:transparent;color:var(--muted)}.full{width:100%}input,select,textarea{width:100%;background:#0d1210;color:var(--text);border:1px solid #34413b;border-radius:10px;padding:11px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--accent);margin:0}.muted{color:var(--muted);font-size:12px;line-height:1.55}.card{background:linear-gradient(180deg,#161d1a,#0f1412);border:1px solid var(--border);border-radius:18px;padding:22px}.auth-shell,.subscription-shell{min-height:100vh;display:grid;place-items:center;padding:24px}.auth-card{width:min(460px,100%)}.logo{display:flex;gap:12px;align-items:center;margin-bottom:24px}.logo-mark{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#10150e;display:grid;place-items:center;font-weight:900;font-size:24px}.logo strong{font-size:22px;display:block}.logo span{font-size:11px;color:var(--muted)}.tabs{display:grid;grid-template-columns:1fr 1fr;background:#0d1210;border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:16px}.tabs button{border:0;background:transparent;color:var(--muted);padding:10px;border-radius:9px;font-weight:700}.tabs button.active{background:#1d2722;color:var(--text)}label{display:grid;gap:7px;margin-bottom:12px;color:var(--muted);font-size:12px}.msg{min-height:18px;margin-top:10px;font-size:12px;color:#ffb0b0}.subscription-wrap{width:min(1050px,100%)}.center{text-align:center}.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}.plan{position:relative}.plan.best{border-color:var(--accent)}.badge{position:absolute;top:-11px;right:16px;background:var(--accent);color:#111;padding:6px 9px;border-radius:999px;font-size:10px;font-weight:800}.price{font-size:38px;font-weight:800;margin:14px 0}.price small{font-size:13px;color:var(--muted)}.app-shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;background:#0c100f;border-right:1px solid var(--border);padding:24px 18px;display:flex;flex-direction:column}.brand{display:flex;gap:10px;align-items:center;padding:0 8px 24px}.brand-mark{width:38px;height:38px;border-radius:11px;background:var(--accent);color:#111;display:grid;place-items:center;font-weight:900}.brand strong{display:block}.brand span{font-size:11px;color:var(--muted)}nav{display:grid;gap:7px}.nav-btn{border:0;background:transparent;color:var(--muted);padding:12px 14px;border-radius:11px;text-align:left}.nav-btn.active,.nav-btn:hover{background:#17201b;color:var(--text)}.user-mini{margin-top:auto;border-top:1px solid var(--border);padding-top:14px}.user-mini strong{display:block;font-size:12px}.user-mini span{display:block;font-size:10px;color:var(--muted);margin:4px 0 10px}.content{padding:32px 40px 60px;max-width:1500px;width:100%;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.hero-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:16px}.dashboard-grid,.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.hero-card{min-height:170px;display:flex;justify-content:space-between;align-items:flex-end}.hero-card h2{margin:10px 0 6px;font-size:28px}.hero-stat{text-align:right}.hero-stat strong{display:block;font-size:34px}.stat-card{display:flex;flex-direction:column;justify-content:center}.stat-card strong{font-size:30px;margin:8px 0}.stat-card span,.stat-card small{color:var(--muted)}.view{display:none}.view.active{display:block}.section-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}.text-btn{border:0;background:none;color:var(--accent);font-weight:700}.exercise-row{display:grid;grid-template-columns:38px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid #222b27}.exercise-icon{width:36px;height:36px;border-radius:9px;background:#1d2822;display:grid;place-items:center;color:var(--accent);font-weight:800}.exercise-row span{display:block;color:var(--muted);font-size:11px;margin-top:3px}.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-stats div{background:#0d1210;border:1px solid #202925;border-radius:12px;padding:14px}.mini-stats span{font-size:11px;color:var(--muted)}.mini-stats strong{display:block;margin-top:6px;font-size:20px}.water-ring{--pct:0%;width:110px;height:110px;border-radius:50%;margin:14px auto;background:conic-gradient(var(--accent) var(--pct),#26302c 0);display:grid;place-items:center;position:relative}.water-ring:after{content:"";position:absolute;inset:10px;background:#121815;border-radius:50%}.water-ring span{z-index:1;font-weight:800}.button-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.chip{border:1px solid #37443e;background:#1c2521;color:var(--text)}.week-plan{display:grid;gap:14px;margin-top:16px}.day-card{overflow:auto}.day-head{display:flex;justify-content:space-between;gap:12px}.day-badge{padding:7px 10px;background:#1e2923;border:1px solid #324139;border-radius:999px;color:var(--accent);font-size:11px;font-weight:700}table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1px solid #25302b;text-align:left;font-size:12px}th{font-size:10px;color:var(--muted);text-transform:uppercase}.form-grid{display:grid;gap:12px}.form-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}.note-card{padding:14px;border:1px solid #27312d;background:#0e1311;border-radius:12px;margin-bottom:10px}.note-card .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:10px}.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.admin-stat span{font-size:11px;color:var(--muted)}.admin-stat strong{display:block;font-size:26px;margin-top:8px}.status{display:inline-block;padding:5px 8px;border-radius:999px;background:#1d2822;color:var(--accent);font-size:10px;font-weight:800}.status.inactive{background:#2a1717;color:#ffb0b0}.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:14px;z-index:2000}.modal-overlay.open{display:flex}.modal-panel{width:min(520px,100%);background:#121815;border:1px solid #37443e;border-radius:18px;padding:18px}.dialog-head{display:flex;justify-content:space-between;align-items:center}.icon-btn{border:0;background:transparent;color:var(--muted);font-size:28px}.loading{position:fixed;inset:0;background:#0a0d0c;display:grid;place-items:center;z-index:5000}.spinner{width:42px;height:42px;border:4px solid #26302c;border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){.app-shell{grid-template-columns:76px 1fr}.sidebar{padding:20px 10px}.brand>div:last-child,.nav-btn span,.user-mini{display:none}.nav-btn{text-align:center}.content{padding:24px 18px}.hero-grid{grid-template-columns:1fr 1fr}.hero-card{grid-column:1/-1}.dashboard-grid,.grid-two{grid-template-columns:1fr}}
+@media(max-width:700px){.plans{grid-template-columns:1fr}.app-shell{display:block}.sidebar{position:fixed;bottom:0;top:auto;height:auto;width:100%;border-right:0;border-top:1px solid var(--border);z-index:1000;padding:7px 8px calc(7px + env(safe-area-inset-bottom))}.brand,.user-mini{display:none}.sidebar nav{grid-template-columns:repeat(8,1fr);gap:2px}.nav-btn{padding:10px 3px;text-align:center;font-size:17px}.content{padding:18px 12px calc(90px + env(safe-area-inset-bottom))}.topbar{align-items:flex-start}.hero-grid,.dashboard-grid,.grid-two{grid-template-columns:1fr}.hero-card{grid-column:auto;min-height:155px}.admin-stats{grid-template-columns:1fr 1fr}.form-row{grid-template-columns:1fr}.day-card table{min-width:640px}}
+</style>
+<style>
+.rewards-card{background:linear-gradient(135deg,#19251f,#101613);border-color:#39483f}
+.reward-top{display:flex;justify-content:space-between;gap:16px;align-items:center}
+.reward-big{font-size:28px;font-weight:800;margin:6px 0}
+.progress-track{height:13px;background:#26302c;border-radius:999px;overflow:hidden;margin:14px 0 9px}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#d6ff9d);border-radius:inherit;transition:width .35s ease}
+.reward-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:11px}
+.badge-grid{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+.reward-badge{border:1px solid #34413b;background:#0d1210;border-radius:999px;padding:7px 10px;color:var(--muted);font-size:10px;font-weight:700}
+.reward-badge.earned{border-color:var(--accent);color:var(--accent);background:#17201b}
+.nutrition-hero{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-bottom:16px}
+.macro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.macro-card{padding:16px;border:1px solid #26302c;border-radius:14px;background:#0d1210}
+.macro-card span{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+.macro-card strong{display:block;font-size:22px;margin:7px 0 2px}
+.macro-card small{color:var(--muted)}
+.macro-bar{height:8px;background:#26302c;border-radius:999px;overflow:hidden;margin-top:10px}
+.macro-bar i{display:block;height:100%;background:var(--accent);border-radius:999px;width:0}
+.nutrition-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.nutrition-tabs button{border:1px solid var(--border);background:#101613;color:var(--muted);border-radius:10px;padding:9px 12px;font-weight:700}
+.nutrition-tabs button.active{background:#1d2822;color:var(--accent);border-color:#3d4b45}
+.nutri-panel{display:none}.nutri-panel.active{display:block}
+.goal-summary{padding:15px;border:1px solid #2a3931;background:#101713;border-radius:13px;margin-top:12px}
+.food-suggestions{display:grid;gap:8px;margin-top:12px}
+.food-option{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:11px;border:1px solid #26302c;border-radius:11px;background:#0d1210}
+.food-option strong{font-size:12px}.food-option span{font-size:10px;color:var(--muted);display:block;margin-top:3px}
+.meal-day{border:1px solid #26302c;border-radius:14px;padding:15px;background:#0d1210;margin-bottom:10px}
+.meal-day h4{margin:0 0 10px}.meal-item{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid #202925;font-size:12px}
+.meal-item span{color:var(--muted)}
+.grocery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.grocery-item{padding:10px;border:1px solid #26302c;border-radius:10px;background:#0d1210;font-size:12px}
+.restriction-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.check-chip{display:flex;align-items:center;gap:7px;padding:9px;border:1px solid #26302c;border-radius:10px;background:#0d1210;font-size:11px;color:var(--text)}
+.check-chip input{width:auto;margin:0}
+.warning{padding:11px 12px;border:1px solid #604b28;background:#251e11;color:#ffd98a;border-radius:10px;font-size:11px;line-height:1.45}
+.reward-history-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #25302b;font-size:12px}
+@media(max-width:900px){.nutrition-hero{grid-template-columns:1fr}.macro-grid{grid-template-columns:1fr 1fr}.restriction-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.macro-grid{grid-template-columns:1fr 1fr}.grocery-grid{grid-template-columns:1fr}.reward-top{align-items:flex-start;flex-direction:column}}
+</style>
+
+
+<style>
+.other-food-result{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:11px;border:1px solid #26302c;border-radius:11px;background:#0d1210}
+.other-food-result strong{font-size:12px}.other-food-result span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.other-food-result button{min-width:78px}
+</style>
+
+
+<style>
+.autocomplete-menu{
+  border:1px solid var(--border);
+  background:#0d1210;
+  border-radius:12px;
+  overflow:hidden;
+  max-height:330px;
+  overflow-y:auto;
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+}
+.autocomplete-item{
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  text-align:left;
+  border:0;
+  border-bottom:1px solid #222b27;
+  background:#0d1210;
+  color:var(--text);
+  padding:11px 12px;
+}
+.autocomplete-item:last-child{border-bottom:0}
+.autocomplete-item:hover,.autocomplete-item:focus{background:#17201b}
+.autocomplete-item strong{font-size:12px}
+.autocomplete-item span{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.autocomplete-item em{font-style:normal;color:var(--accent);font-size:10px}
+</style>
+
+</head><body>
+<div id="loading" class="loading"><div class="spinner"></div></div>
+<section id="authScreen" class="auth-shell hidden"><div class="auth-card card"><div class="logo"><div class="logo-mark">F</div><div><strong>ForgeFit</strong><span>Personalized Fitness Tracking</span></div></div><div class="tabs"><button id="loginTab" class="active">Log In</button><button id="signupTab">Create Account</button></div><form id="authForm"><label id="nameField" class="hidden">Full name<input id="authName"></label><label>Email<input id="authEmail" type="email" required></label><label>Password<input id="authPassword" type="password" minlength="8" required></label><button class="primary full" id="authSubmit">Log In</button><div id="authMsg" class="msg"></div></form><p class="muted center">Your ForgeFit data syncs across devices.</p></div></section>
+<section id="subscriptionScreen" class="subscription-shell hidden"><div class="subscription-wrap"><div class="center"><div class="logo" style="justify-content:center"><div class="logo-mark">F</div><div style="text-align:left"><strong>ForgeFit</strong><span>Choose your membership</span></div></div><p class="eyebrow">7 DAYS FREE</p><h1>Start your ForgeFit free trial</h1><p class="muted">Choose a plan today. Your first 7 days are free, then your selected plan begins automatically unless you cancel before the trial ends.</p></div><div class="plans"><article class="plan card"><p class="eyebrow">MONTHLY</p><div class="price">$10 <small>/ month</small></div><p class="muted"><strong style="color:var(--accent)">7-day free trial</strong><br>Then $10 every month</p><button class="primary full subscribe-btn" data-price="price_1U3mpEFnkiGGfnMA4uc7jPc9">Start Free Trial</button></article><article class="plan card"><p class="eyebrow">6 MONTHS</p><div class="price">$55 <small>/ 6 months</small></div><p class="muted"><strong style="color:var(--accent)">7-day free trial</strong><br>Then $55 every 6 months</p><button class="primary full subscribe-btn" data-price="price_1U3mpEFnkiGGfnMAIFMLCJOG">Start Free Trial</button></article><article class="plan card best"><span class="badge">BEST VALUE</span><p class="eyebrow">ANNUAL</p><div class="price">$80 <small>/ year</small></div><p class="muted"><strong style="color:var(--accent)">7-day free trial</strong><br>Then $80 every year</p><button class="primary full subscribe-btn" data-price="price_1U3mpEFnkiGGfnMAxFWWAcaq">Start Free Trial</button></article></div><div class="center" style="margin-top:18px"><button id="subscriptionLogout" class="ghost">Log out</button><p id="subscriptionMsg" class="msg"></p></div></div></section>
+<div id="appScreen" class="app-shell hidden"><aside class="sidebar"><div class="brand"><div class="brand-mark">F</div><div><strong>ForgeFit</strong><span>Gym Tracker</span></div></div><nav><button class="nav-btn active" data-view="dashboard">▦ <span>Dashboard</span></button><button class="nav-btn" data-view="workouts">◫ <span>Workouts</span></button><button class="nav-btn" data-view="progress">↗ <span>Progress</span></button><button class="nav-btn" data-view="water">◉ <span>Water</span></button><button class="nav-btn" data-view="notes">✎ <span>Notes</span></button><button class="nav-btn" data-view="nutrition">◎ <span>Nutrition</span></button><button class="nav-btn admin-only hidden" data-view="admin">⚙ <span>Admin</span></button><button class="nav-btn" id="logoutBtn">⇥ <span>Log Out</span></button></nav><div class="user-mini"><strong id="sideName"></strong><span id="sideEmail"></span><button id="desktopLogout" class="ghost full">Log out</button></div></aside><main class="content"><header class="topbar"><div><p class="eyebrow" id="todayLabel"></p><h1 id="pageTitle">Dashboard</h1></div><button id="manageMembershipBtn" class="secondary hidden">Manage Membership</button><button id="logWorkoutBtn" class="primary">+ Log Workout</button></header>
+<section id="dashboard" class="view active"><div class="hero-grid"><article class="card hero-card"><div><span class="eyebrow">THIS WEEK</span><h2 id="heroWorkoutTitle"></h2><p class="muted">10 min cardio + programmed training</p></div><div class="hero-stat"><strong id="weeklyComplete">0/5</strong><span>workouts complete</span></div></article><article class="card stat-card"><span>Current Body Weight</span><strong id="currentWeight">—</strong><small id="weightDelta">Log your first weigh-in</small></article><article class="card stat-card"><span>Water Today</span><strong id="waterToday">0 oz</strong><small>Goal: 100 oz</small></article></div><div class="dashboard-grid"><article class="card"><div class="section-head"><div><p class="eyebrow">TODAY'S TRAINING</p><h3 id="todayWorkoutName"></h3></div><button class="text-btn" data-jump="workouts">Open plan →</button></div><div id="todayExercises"></div></article><article class="card center"><p class="eyebrow">HYDRATION</p><h3>Daily Water</h3><div class="water-ring" id="waterRing"><span id="waterPercent">0%</span></div><p><strong id="waterOzBig">0</strong> / 100 oz</p><div class="button-row"><button class="chip water-add" data-oz="8">+ 8 oz</button><button class="chip water-add" data-oz="16">+ 16 oz</button><button class="chip water-add" data-oz="24">+ 24 oz</button></div></article><article class="card"><p class="eyebrow">MONTHLY SNAPSHOT</p><h3>Progress</h3><div class="mini-stats"><div><span>Weight change</span><strong id="monthWeightChange">—</strong></div><div><span>Workouts</span><strong id="monthWorkouts">0</strong></div><div><span>Volume</span><strong id="monthVolume">0 lb</strong></div><div><span>Subscription</span><strong id="subStatus">Active</strong></div></div></article>
+<article class="card rewards-card">
+  <div class="reward-top">
+    <div>
+      <p class="eyebrow">FORGEFIT REWARDS</p>
+      <h3 style="margin:5px 0 0">Workout Reward Progress</h3>
+    </div>
+    <div style="text-align:right">
+      <div class="reward-big" id="rewardCount">0 / 60</div>
+      <span class="muted" id="rewardNextText">60 qualifying workout days until $10 credit</span>
+    </div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="rewardProgressFill"></div></div>
+  <div class="reward-meta"><span id="currentStreakText">Current streak: 0 days</span><span>1 qualifying day = 4+ exercises logged</span></div>
+  <div class="badge-grid" id="rewardBadges"></div>
+</article>
+<article class="card">
+  <div class="section-head"><div><p class="eyebrow">NUTRITION TODAY</p><h3>Macros</h3></div><button class="text-btn" data-jump="nutrition">Open Nutrition →</button></div>
+  <div class="macro-grid" id="dashboardMacroGrid"></div>
+</article>
+<article class="card"><div class="section-head"><div><p class="eyebrow">RECENT FORM NOTES</p><h3>Technique</h3></div><button class="text-btn" data-jump="notes">Add note →</button></div><div id="recentNotes"></div></article></div></section>
+<section id="workouts" class="view"><div class="card"><p class="eyebrow">AUTO PROGRAM</p><h2>Weekly Workout Plan</h2><p class="muted">Every workout starts with 10 minutes of cardio. Friday includes legs, abs, and an additional 20-minute cardio finisher.</p></div><div id="weekPlan" class="week-plan"></div></section>
+<section id="progress" class="view"><div class="grid-two"><article class="card"><p class="eyebrow">BODY WEIGHT</p><h3>Weigh-in</h3><form id="weightForm" class="form-grid"><label>Weight (lb)<input id="bodyWeightInput" type="number" step=".1" required></label><label>Date<input id="weightDateInput" type="date" required></label><button class="primary">Save weigh-in</button></form></article><article class="card"><p class="eyebrow">SMART LIFT TARGETS</p><h3>Recommended Working Weight</h3><form id="recommendForm" class="form-grid"><label>Exercise<select id="recommendExercise"></select></label><label>Target reps<input id="recommendReps" type="number" value="8" min="1" max="20"></label><button class="secondary">Calculate</button></form><div id="recommendResult" class="note-card" style="margin-top:12px">Log a lift for the best recommendation.</div></article></div><article class="card"><p class="eyebrow">LIFT HISTORY</p><h3>Recent Sets</h3><div style="overflow:auto"><table><thead><tr><th>Date</th><th>Exercise</th><th>Weight</th><th>Sets × Reps</th><th>Est. 1RM</th></tr></thead><tbody id="liftHistoryBody"></tbody></table></div></article></section>
+<section id="water" class="view"><div class="grid-two"><article class="card center"><p class="eyebrow">DAILY HYDRATION</p><h2>Water Intake</h2><div class="water-ring" id="waterRingLarge"><span id="waterPercentLarge">0%</span></div><h3><span id="waterLargeCurrent">0</span> / 100 oz</h3><div class="button-row"><button class="primary water-add" data-oz="8">+ 8 oz</button><button class="primary water-add" data-oz="16">+ 16 oz</button><button class="primary water-add" data-oz="24">+ 24 oz</button></div></article><article class="card"><p class="eyebrow">LAST 7 DAYS</p><h3>Hydration</h3><div id="waterHistory"></div></article></div></section>
+<section id="notes" class="view"><div class="grid-two"><article class="card"><p class="eyebrow">FORM & TECHNIQUE</p><h3>Add Training Note</h3><form id="noteForm" class="form-grid"><label>Exercise<input id="noteExercise" required></label><label>Category<select id="noteCategory"><option>Form</option><option>Mobility</option><option>Progression</option><option>General</option></select></label><label>Note<textarea id="noteText" rows="5" required></textarea></label><button class="primary">Save note</button></form></article><article class="card"><p class="eyebrow">YOUR NOTES</p><h3>Technique Log</h3><div id="notesList"></div></article></div></section>
+
+<section id="nutrition" class="view">
+  <div class="nutrition-tabs">
+    <button class="nutri-tab active" data-nutri="nutriToday">Today</button>
+    <button class="nutri-tab" data-nutri="nutriGoals">Goals & Macros</button>
+    <button class="nutri-tab" data-nutri="nutriFoods">Food Ideas</button>
+    <button class="nutri-tab" data-nutri="nutriMeals">Weekly Meal Plan</button>
+    <button class="nutri-tab" data-nutri="nutriGrocery">Grocery List</button>
+  </div>
+
+  <div id="nutriToday" class="nutri-panel active">
+    <div class="nutrition-hero">
+      <article class="card">
+        <p class="eyebrow">TODAY'S TARGETS</p><h2>Macro Dashboard</h2>
+        <div class="macro-grid" id="nutritionMacroGrid"></div>
+        <div class="goal-summary" id="nutritionGoalSummary">Set your nutrition goal to generate personalized targets.</div>
+      </article>
+      <article class="card">
+        <p class="eyebrow">LOG FOOD OR DRINK</p><h3>Search & Add</h3>
+
+        <div class="form-grid">
+          <label>Search food or drink
+            <input id="smartFoodSearch" autocomplete="off"
+              placeholder="Start typing, e.g. chi, chicken, Coke, oatmeal">
+          </label>
+
+          <div id="smartFoodSuggestions" class="autocomplete-menu hidden"></div>
+          <div id="smartFoodStatus" class="muted"></div>
+
+          <div id="smartFoodSelected" class="hidden goal-summary">
+            <strong id="smartFoodSelectedName"></strong>
+            <div id="smartFoodSelectedBase" class="muted" style="margin-top:4px"></div>
+
+            <div class="form-grid" style="margin-top:12px">
+              <label>Amount type
+                <select id="smartFoodAmountType">
+                  <option value="ounces">Ounces</option>
+                  <option value="servings">Servings</option>
+                </select>
+              </label>
+
+              <label id="smartFoodOuncesLabel">Amount (oz)
+                <input id="smartFoodAmount" type="number" min=".1" step=".1" value="4">
+              </label>
+
+              <label>Meal
+                <select id="smartFoodMeal">
+                  <option>Breakfast</option>
+                  <option>Lunch</option>
+                  <option>Dinner</option>
+                  <option>Snack</option>
+                </select>
+              </label>
+
+              <div id="smartFoodCalculated" class="note-card"></div>
+              <button id="smartFoodAddBtn" type="button" class="primary">Add to Today</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+    <article class="card"><div class="section-head"><div><p class="eyebrow">TODAY'S FOOD</p><h3>Food Log</h3></div></div><div class="table-wrap"><table><thead><tr><th>Meal</th><th>Food</th><th>Amount</th><th>Calories</th><th>P</th><th>C</th><th>F</th><th></th></tr></thead><tbody id="foodLogBody"></tbody></table></div></article>
+  </div>
+
+  <div id="nutriGoals" class="nutri-panel">
+    <div class="grid-two">
+      <article class="card">
+        <p class="eyebrow">PERSONAL GOAL</p><h3>Build Your Macro Plan</h3>
+        <form id="nutritionGoalForm" class="form-grid">
+          <div class="form-row">
+            <label>Current weight (lb)<input id="nutriCurrentWeight" type="number" step=".1" required></label>
+            <label>Target weight (lb)<input id="nutriTargetWeight" type="number" step=".1" required></label>
+            <label>Target date<input id="nutriTargetDate" type="date" required></label>
+          </div>
+          <div class="form-row">
+            <label>Height (inches)<input id="nutriHeight" type="number" min="48" max="90" required></label>
+            <label>Age<input id="nutriAge" type="number" min="18" max="100" required></label>
+            <label>Sex used for calorie estimate<select id="nutriSex"><option value="male">Male</option><option value="female">Female</option></select></label>
+          </div>
+          <label>Activity level<select id="nutriActivity"><option value="1.2">Mostly sedentary</option><option value="1.375">Lightly active</option><option value="1.55" selected>Moderately active</option><option value="1.725">Very active</option><option value="1.9">Extremely active</option></select></label>
+          <label>Goal type<select id="nutriGoalType"><option value="lose">Lose fat / weight</option><option value="gain">Gain weight / muscle</option><option value="recomp">Body recomposition</option><option value="maintain">Maintain</option></select></label>
+          <div class="form-row">
+            <label>Body fat % (optional)<input id="nutriBodyFat" type="number" step=".1" min="3" max="60"></label>
+            <label>Target body fat % (optional)<input id="nutriTargetBodyFat" type="number" step=".1" min="3" max="60"></label>
+            <label>Muscle goal (optional)<input id="nutriMuscleGoal" placeholder="e.g. build lean mass"></label>
+          </div>
+          <label>Meals per day<select id="nutriMealsPerDay"><option>3</option><option selected>4</option><option>5</option><option>6</option></select></label>
+          <p class="eyebrow" style="margin-top:6px">DIETARY RESTRICTIONS</p>
+          <div class="restriction-grid" id="restrictionGrid">
+            <label class="check-chip"><input type="checkbox" value="dairy-free"> Dairy-free</label>
+            <label class="check-chip"><input type="checkbox" value="gluten-free"> Gluten-free</label>
+            <label class="check-chip"><input type="checkbox" value="vegetarian"> Vegetarian</label>
+            <label class="check-chip"><input type="checkbox" value="vegan"> Vegan</label>
+            <label class="check-chip"><input type="checkbox" value="no-pork"> No pork</label>
+            <label class="check-chip"><input type="checkbox" value="no-seafood"> No seafood</label>
+            <label class="check-chip"><input type="checkbox" value="nut-free"> Nut-free</label>
+          </div>
+          <label>Other restrictions / allergies<textarea id="nutriRestrictionsText" rows="2" placeholder="Anything else ForgeFit should avoid"></textarea></label>
+          <label>Foods you dislike<textarea id="nutriDislikes" rows="2" placeholder="e.g. mushrooms, cottage cheese"></textarea></label>
+          <button class="primary">Calculate & Save Targets</button>
+        </form>
+      </article>
+      <article class="card">
+        <p class="eyebrow">YOUR PLAN</p><h3>Calculated Targets</h3>
+        <div id="calculatedNutritionPlan"><p class="muted">Fill in the required fields and press Calculate & Save Targets. Body-fat percentage, target body-fat percentage, muscle goal, restrictions, and dislikes are optional.</p></div>
+        <div class="warning" style="margin-top:14px">Your calculated targets will appear above. Optional fields such as body-fat percentage and muscle goal can be left blank.</div>
+      </article>
+    </div>
+  </div>
+
+  <div id="nutriFoods" class="nutri-panel">
+    <article class="card">
+      <p class="eyebrow">EASY FOOD OPTIONS</p><h2>Foods That Fit Your Macros</h2>
+      <p class="muted">Each section shows common, accessible foods that match your restrictions and estimates how much would supply your remaining macro. Mix foods rather than trying to get an entire macro from one item.</p>
+      <div class="grid-two">
+        <div><h3>Protein</h3><div id="proteinFoodIdeas" class="food-suggestions"></div></div>
+        <div><h3>Carbs</h3><div id="carbFoodIdeas" class="food-suggestions"></div></div>
+        <div><h3>Fats</h3><div id="fatFoodIdeas" class="food-suggestions"></div></div>
+        <div><h3>Balanced Foods</h3><div id="balancedFoodIdeas" class="food-suggestions"></div></div>
+      </div>
+    </article>
+  </div>
+
+  <div id="nutriMeals" class="nutri-panel">
+    <article class="card">
+      <div class="section-head"><div><p class="eyebrow">7-DAY PLAN</p><h2>Weekly Meal Plan</h2></div><button id="generateMealPlanBtn" class="primary">Generate New Week</button></div>
+      <div id="mealPlanHost"><p class="muted">Set your nutrition goal, then generate a meal plan.</p></div>
+    </article>
+  </div>
+
+  <div id="nutriGrocery" class="nutri-panel">
+    <article class="card">
+      <p class="eyebrow">SHOPPING LIST</p><h2>Weekly Grocery List</h2>
+      <div id="groceryHost" class="grocery-grid"><p class="muted">Generate a weekly meal plan first.</p></div>
+    </article>
+  </div>
+</section>
+
+<section id="admin" class="view"><div class="admin-stats"><article class="card admin-stat"><span>Total Accounts</span><strong id="adminUsers">0</strong></article><article class="card admin-stat"><span>Active Subscribers</span><strong id="adminActive">0</strong></article><article class="card admin-stat"><span>Est. Monthly Value</span><strong id="adminRevenue">$0</strong></article><article class="card admin-stat"><span>Recent Workout Logs</span><strong id="adminWorkouts">0</strong></article></div><article class="card"><div class="section-head"><div><p class="eyebrow">ADMIN CONTROL CENTER</p><h3>ForgeFit Members</h3></div><button id="refreshAdmin" class="secondary">Refresh</button></div><div style="overflow:auto"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Plan</th><th>Status</th><th>Joined</th></tr></thead><tbody id="adminMembersBody"></tbody></table></div></article><article class="card" style="margin-top:16px"><p class="eyebrow">RECENT PLATFORM ACTIVITY</p><h3>Workout Logs</h3><div style="overflow:auto"><table><thead><tr><th>User</th><th>Date</th><th>Exercise</th><th>Weight</th><th>Sets × Reps</th></tr></thead><tbody id="adminWorkoutBody"></tbody></table></div></article></section>
+</main></div>
+<div id="logDialog" class="modal-overlay"><div class="modal-panel"><form id="liftForm" class="form-grid"><div class="dialog-head"><div><p class="eyebrow">WORKOUT LOG</p><h2>Log a Lift</h2></div><button type="button" id="closeDialog" class="icon-btn">×</button></div><label>Exercise<select id="liftExercise"></select></label><div class="form-row"><label>Weight (lb)<input id="liftWeight" type="number" step="2.5" required></label><label>Sets<input id="liftSets" type="number" value="3" min="1" required></label><label>Reps<input id="liftReps" type="number" value="8" min="1" required></label></div><label>Date<input id="liftDate" type="date" required></label><button class="primary">Save Lift</button></form></div></div>
+<script>
+const SUPABASE_URL='https://vyngabgmruqycdopddxr.supabase.co',SUPABASE_KEY='sb_publishable_ZIiHKG-nmAH9d8jEW1I5LQ_-uRUUKOh';const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);const PRICES={monthly:'price_1U3mpEFnkiGGfnMA4uc7jPc9',six:'price_1U3mpEFnkiGGfnMAIFMLCJOG',annual:'price_1U3mpEFnkiGGfnMAxFWWAcaq'};
+const EX={"Barbell Bench Press":['Chest',.85],"Incline Dumbbell Press":['Chest',.32],"Machine Chest Press":['Chest',.65],"Cable Fly":['Chest',.28],"Lat Pulldown":['Back',.65],"Seated Cable Row":['Back',.65],"Chest Supported Row":['Back',.55],"Straight Arm Pulldown":['Back',.32],"Barbell Curl":['Biceps',.32],"Dumbbell Hammer Curl":['Biceps',.18],"Preacher Curl Machine":['Biceps',.28],"Cable Curl":['Biceps',.25],"Rope Triceps Pushdown":['Triceps',.32],"Overhead Cable Extension":['Triceps',.25],"Assisted Dip / Dip":['Triceps',.7],"Neck Flexion":['Neck',.08],"Neck Extension":['Neck',.1],"Neck Lateral Flexion":['Neck',.06],"Barbell Back Squat":['Legs',1.05],"Romanian Deadlift":['Legs',1],"Leg Press":['Legs',1.8],"Leg Curl":['Legs',.5],"Leg Extension":['Legs',.55],"Standing Calf Raise":['Legs',.7],"Cable Crunch":['Abs',.35],"Hanging Knee Raise":['Abs',0]};
+
+const FOODS=[
+{name:"Chicken breast, cooked",serving:"4 oz",cal:187,p:35,c:0,f:4,tags:["protein","gluten-free","dairy-free","nut-free","no-pork"]},
+{name:"Lean ground beef 93/7",serving:"4 oz",cal:200,p:28,c:0,f:8,tags:["protein","gluten-free","dairy-free","nut-free","no-pork"]},
+{name:"Turkey breast",serving:"4 oz",cal:150,p:32,c:0,f:2,tags:["protein","gluten-free","dairy-free","nut-free","no-pork"]},
+{name:"Salmon",serving:"4 oz",cal:233,p:25,c:0,f:14,tags:["protein","fat","gluten-free","dairy-free","nut-free","no-pork"]},
+{name:"Tuna, canned",serving:"1 can",cal:130,p:29,c:0,f:1,tags:["protein","gluten-free","dairy-free","nut-free","no-pork"]},
+{name:"Eggs",serving:"2 large",cal:140,p:12,c:1,f:10,tags:["protein","fat","gluten-free","dairy-free","nut-free","vegetarian","no-pork"]},
+{name:"Greek yogurt, nonfat",serving:"1 cup",cal:130,p:23,c:9,f:0,tags:["protein","gluten-free","nut-free","vegetarian","no-pork"]},
+{name:"Cottage cheese",serving:"1 cup",cal:206,p:28,c:8,f:5,tags:["protein","gluten-free","nut-free","vegetarian","no-pork"]},
+{name:"Whey protein",serving:"1 scoop",cal:120,p:24,c:3,f:2,tags:["protein","gluten-free","nut-free","vegetarian","no-pork"]},
+{name:"Tofu, firm",serving:"6 oz",cal:165,p:18,c:5,f:10,tags:["protein","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Lentils, cooked",serving:"1 cup",cal:230,p:18,c:40,f:1,tags:["protein","carb","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"White rice, cooked",serving:"1 cup",cal:205,p:4,c:45,f:0,tags:["carb","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Brown rice, cooked",serving:"1 cup",cal:216,p:5,c:45,f:2,tags:["carb","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Oatmeal, dry",serving:"1/2 cup",cal:150,p:5,c:27,f:3,tags:["carb","vegetarian","vegan","dairy-free","nut-free","no-pork","no-seafood"]},
+{name:"Potato, baked",serving:"1 medium",cal:161,p:4,c:37,f:0,tags:["carb","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Sweet potato",serving:"1 medium",cal:112,p:2,c:26,f:0,tags:["carb","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Banana",serving:"1 medium",cal:105,p:1,c:27,f:0,tags:["carb","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Whole wheat bread",serving:"2 slices",cal:160,p:8,c:28,f:2,tags:["carb","vegetarian","vegan","dairy-free","nut-free","no-pork","no-seafood"]},
+{name:"Olive oil",serving:"1 tbsp",cal:119,p:0,c:0,f:14,tags:["fat","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Avocado",serving:"1/2 medium",cal:120,p:2,c:6,f:11,tags:["fat","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Peanut butter",serving:"2 tbsp",cal:190,p:8,c:7,f:16,tags:["fat","protein","vegan","vegetarian","dairy-free","gluten-free","no-pork","no-seafood"]},
+{name:"Almonds",serving:"1 oz",cal:164,p:6,c:6,f:14,tags:["fat","vegan","vegetarian","dairy-free","gluten-free","no-pork","no-seafood"]},
+{name:"Black beans",serving:"1 cup",cal:227,p:15,c:41,f:1,tags:["protein","carb","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]},
+{name:"Milk 2%",serving:"1 cup",cal:122,p:8,c:12,f:5,tags:["balanced","gluten-free","nut-free","vegetarian","no-pork"]},
+{name:"Protein bar",serving:"1 bar",cal:220,p:20,c:24,f:7,tags:["balanced","protein","vegetarian","no-pork"]},
+{name:"Chicken & rice bowl",serving:"1 bowl",cal:610,p:48,c:72,f:13,tags:["balanced","protein","carb","dairy-free","nut-free","no-pork"]},
+{name:"Turkey sandwich",serving:"1 sandwich",cal:430,p:34,c:48,f:11,tags:["balanced","protein","carb","nut-free","no-pork"]},
+{name:"Tofu rice bowl",serving:"1 bowl",cal:540,p:27,c:73,f:16,tags:["balanced","vegan","vegetarian","dairy-free","gluten-free","nut-free","no-pork","no-seafood"]}
+];
+
+const REWARD_LEVELS=[
+  {milestone:60,cents:1000,label:"$10 credit"},
+  {milestone:120,cents:1500,label:"$15 credit"},
+  {milestone:180,cents:2000,label:"$20 credit"},
+  {milestone:300,cents:2500,label:"$25 credit + Legend badge"}
+];
+
+const PL={monday:['Chest + Triceps + Neck',[["Barbell Bench Press",4,8,'Barbell + bench'],["Incline Dumbbell Press",3,10,'Bench + dumbbells'],["Cable Fly",3,12,'Cable'],["Rope Triceps Pushdown",3,12,'Cable'],["Overhead Cable Extension",3,10,'Cable'],["Neck Flexion",2,15,'Controlled resistance'],["Neck Extension",2,15,'Controlled resistance']]],tuesday:['Back + Biceps',[["Lat Pulldown",4,8,'Lat pulldown'],["Seated Cable Row",4,10,'Cable row'],["Chest Supported Row",3,10,'Machine'],["Straight Arm Pulldown",3,12,'Cable'],["Barbell Curl",3,8,'Barbell'],["Dumbbell Hammer Curl",3,10,'Dumbbells']]],wednesday:['Chest + Arms + Neck',[["Machine Chest Press",4,10,'Machine'],["Incline Dumbbell Press",3,10,'Bench + dumbbells'],["Cable Fly",3,15,'Cable'],["Preacher Curl Machine",3,10,'Machine'],["Rope Triceps Pushdown",3,12,'Cable'],["Neck Lateral Flexion",2,15,'Controlled resistance']]],thursday:['Back + Biceps + Triceps',[["Chest Supported Row",4,8,'Machine'],["Lat Pulldown",3,10,'Lat pulldown'],["Seated Cable Row",3,12,'Cable'],["Cable Curl",3,12,'Cable'],["Dumbbell Hammer Curl",2,12,'Dumbbells'],["Overhead Cable Extension",3,12,'Cable'],["Assisted Dip / Dip",3,8,'Dip station']]],friday:['Legs + Abs + Extra Cardio',[["Barbell Back Squat",4,8,'Squat rack'],["Romanian Deadlift",3,10,'Barbell/dumbbells'],["Leg Press",3,10,'Leg press'],["Leg Curl",3,12,'Leg curl'],["Leg Extension",3,12,'Leg extension'],["Standing Calf Raise",4,12,'Calf machine'],["Cable Crunch",3,15,'Cable'],["Hanging Knee Raise",3,12,'Captain chair']]]};
+let user=null,profile=null,sub=null,signup=false,cache={weights:[],lifts:[],water:[],notes:[],foodLogs:[],nutrition:null,rewards:[],mealPlan:null};const q=id=>document.getElementById(id),iso=(d=new Date())=>d.toISOString().slice(0,10),fmt=(n,d=0)=>Number(n||0).toLocaleString(undefined,{maximumFractionDigits:d}),e1rm=(w,r)=>r<=1?w:w*(1+r/30),esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+function showOnly(id){['authScreen','subscriptionScreen','appScreen'].forEach(x=>q(x).classList.toggle('hidden',x!==id));q('loading').classList.add('hidden')}function authMode(s){signup=s;q('loginTab').classList.toggle('active',!s);q('signupTab').classList.toggle('active',s);q('nameField').classList.toggle('hidden',!s);q('authSubmit').textContent=s?'Create Account':'Log In';q('authMsg').textContent=''}q('loginTab').onclick=()=>authMode(false);q('signupTab').onclick=()=>authMode(true);
+q('authForm').onsubmit=async e=>{e.preventDefault();q('authMsg').textContent='';try{const email=q('authEmail').value.trim(),password=q('authPassword').value;if(signup){const full_name=q('authName').value.trim();const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name}}});if(error)throw error;if(data.user&&!data.session){q('authMsg').style.color='var(--accent)';q('authMsg').textContent='Account created. Check your email to verify it, then log in.';authMode(false);return}}else{const {error}=await sb.auth.signInWithPassword({email,password});if(error)throw error}await route()}catch(err){q('authMsg').textContent=err.message||'Unable to continue'}};
+async function route(){const {data:{user:u}}=await sb.auth.getUser();user=u;if(!u){showOnly('authScreen');return}let {data:p}=await sb.from('profiles').select('*').eq('id',u.id).maybeSingle();profile=p;if(profile&&!profile.full_name&&u.user_metadata?.full_name){await sb.from('profiles').update({full_name:u.user_metadata.full_name}).eq('id',u.id);profile.full_name=u.user_metadata.full_name}const {data:s}=await sb.from('subscriptions').select('*').eq('user_id',u.id).maybeSingle();sub=s;const admin=profile?.role==='admin';if(!admin&&!['active','trialing'].includes(sub?.status)){showOnly('subscriptionScreen');return}showOnly('appScreen');document.querySelectorAll('.admin-only').forEach(x=>x.classList.toggle('hidden',!admin));q('sideName').textContent=profile?.full_name||'ForgeFit Member';q('sideEmail').textContent=u.email||'';q('subStatus').textContent=admin?'Admin':sub?.status||'active';q('manageMembershipBtn').classList.toggle('hidden',!sub?.stripe_customer_id);await load();render();if(admin)await loadAdmin()}
+async function load(){const id=user.id;const today=iso();const weekAgo=iso(new Date(Date.now()-7*86400000));const [w,l,wa,n,fl,np,re,mp]=await Promise.all([
+sb.from('weight_logs').select('*').eq('user_id',id).order('logged_at'),
+sb.from('workout_logs').select('*').eq('user_id',id).order('workout_date',{ascending:false}),
+sb.from('water_logs').select('*').eq('user_id',id).gte('logged_at',weekAgo).order('logged_at'),
+sb.from('notes').select('*').eq('user_id',id).order('created_at',{ascending:false}),
+sb.from('food_logs').select('*').eq('user_id',id).eq('logged_at',today).order('created_at'),
+sb.from('nutrition_profiles').select('*').eq('user_id',id).maybeSingle(),
+sb.from('reward_events').select('*').eq('user_id',id).order('milestone_workouts'),
+sb.from('meal_plans').select('*').eq('user_id',id).order('created_at',{ascending:false}).limit(1).maybeSingle()
+]);cache={weights:w.data||[],lifts:l.data||[],water:wa.data||[],notes:n.data||[],foodLogs:fl.data||[],nutrition:np.data||null,rewards:re.data||[],mealPlan:mp.data||null}}
+function view(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav-btn[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));q('pageTitle').textContent=id[0].toUpperCase()+id.slice(1)}document.querySelectorAll('.nav-btn[data-view]').forEach(b=>b.onclick=()=>view(b.dataset.view));document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>view(b.dataset.jump));
+
+function qualifyingWorkoutDates(){
+  const by={};
+  cache.lifts.forEach(x=>{const d=x.workout_date;if(!by[d])by[d]=new Set();by[d].add(x.exercise)});
+  return Object.keys(by).filter(d=>by[d].size>=4).sort();
+}
+function currentWorkoutStreak(dates){
+  const set=new Set(dates), d=new Date();let streak=0;
+  // A streak follows consecutive calendar days that contain a qualifying workout.
+  // Today can be pending; if today isn't logged yet, begin checking yesterday.
+  if(!set.has(iso(d))) d.setDate(d.getDate()-1);
+  while(set.has(iso(d))){streak++;d.setDate(d.getDate()-1)}
+  return streak;
+}
+function renderRewards(){
+  const dates=qualifyingWorkoutDates(), count=dates.length, earned=new Set(cache.rewards.filter(x=>x.status==='awarded').map(x=>Number(x.milestone_workouts)));
+  const next=REWARD_LEVELS.find(x=>count<x.milestone)||null;
+  const previous=next ? REWARD_LEVELS.filter(x=>x.milestone<next.milestone).slice(-1)[0]?.milestone||0 : 300;
+  if(next){
+    const progress=Math.max(0,Math.min(100,(count-previous)/(next.milestone-previous)*100));
+    q('rewardCount').textContent=`${count} / ${next.milestone}`;
+    q('rewardNextText').textContent=`${Math.max(0,next.milestone-count)} qualifying workout days until ${next.label}`;
+    q('rewardProgressFill').style.width=progress+'%';
+  }else{
+    q('rewardCount').textContent=`${count} total`;
+    q('rewardNextText').textContent='All current reward tiers unlocked';
+    q('rewardProgressFill').style.width='100%';
+  }
+  q('currentStreakText').textContent=`Current streak: ${currentWorkoutStreak(dates)} day${currentWorkoutStreak(dates)===1?'':'s'}`;
+  q('rewardBadges').innerHTML=REWARD_LEVELS.map(r=>`<span class="reward-badge ${earned.has(r.milestone)?'earned':''}">${earned.has(r.milestone)?'✓ ':''}${r.milestone}: ${r.label}</span>`).join('');
+}
+function nutritionTotals(){
+  return cache.foodLogs.reduce((a,x)=>{a.cal+=Number(x.calories||0);a.p+=Number(x.protein||0);a.c+=Number(x.carbs||0);a.f+=Number(x.fat||0);return a},{cal:0,p:0,c:0,f:0});
+}
+function macroCardsHTML(){
+  const n=cache.nutrition||{},t=nutritionTotals();
+  const vals=[
+    ['Calories',Math.round(t.cal),Math.round(n.calories_target||0),''],
+    ['Protein',Math.round(t.p),Math.round(n.protein_target||0),'g'],
+    ['Carbs',Math.round(t.c),Math.round(n.carbs_target||0),'g'],
+    ['Fat',Math.round(t.f),Math.round(n.fat_target||0),'g']
+  ];
+  return vals.map(([name,cur,target,u])=>{const pct=target?Math.min(100,cur/target*100):0;return `<div class="macro-card"><span>${name}</span><strong>${cur}${u} / ${target||'—'}${target?u:''}</strong><small>${target?Math.max(0,target-cur)+u+' remaining':'Set target first'}</small><div class="macro-bar"><i style="width:${pct}%"></i></div></div>`}).join('');
+}
+function allowedFoods(){
+  const n=cache.nutrition||{}, r=new Set(n.restrictions||[]), dislikes=(n.dislikes||'').toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
+  return FOODS.filter(f=>{
+    if(r.has('vegan')&&!f.tags.includes('vegan')) return false;
+    if(r.has('vegetarian')&&!f.tags.includes('vegetarian')) return false;
+    for(const rule of ['dairy-free','gluten-free','no-pork','no-seafood','nut-free']) if(r.has(rule)&&!f.tags.includes(rule)) return false;
+    if(dislikes.some(d=>f.name.toLowerCase().includes(d))) return false;
+    return true;
+  });
+}
+function renderFoodIdeas(){
+  const n=cache.nutrition||{}, totals=nutritionTotals(), remaining={protein:Math.max(0,(n.protein_target||0)-totals.p),carb:Math.max(0,(n.carbs_target||0)-totals.c),fat:Math.max(0,(n.fat_target||0)-totals.f)};
+  const foods=allowedFoods();
+  function cards(type,macro,key){
+    return foods.filter(f=>f.tags.includes(type)||((type==='balanced')&&f.tags.includes('balanced'))).slice(0,8).map(f=>{
+      const per=f[macro]||0, need=per?remaining[key]/per:0;
+      return `<div class="food-option"><div><strong>${esc(f.name)}</strong><span>${f.serving}: ${f.cal} cal · ${f.p}P · ${f.c}C · ${f.f}F</span></div><div style="text-align:right"><strong>${per?Math.max(.25,Math.round(need*4)/4)+' servings':'—'}</strong><span>${per?'to cover remaining '+key:'balanced option'}</span></div></div>`;
+    }).join('')||'<p class="muted">No foods match your current restrictions.</p>';
+  }
+  q('proteinFoodIdeas').innerHTML=cards('protein','p','protein');
+  q('carbFoodIdeas').innerHTML=cards('carb','c','carb');
+  q('fatFoodIdeas').innerHTML=cards('fat','f','fat');
+  q('balancedFoodIdeas').innerHTML=cards('balanced','p','protein');
+}
+">${esc(f.name)} — ${f.serving}</option>`).join('');
+}
+
+function prefillNutritionForm(){
+ const n=cache.nutrition;if(!n)return;
+ const map={nutriCurrentWeight:n.current_weight,nutriTargetWeight:n.target_weight,nutriTargetDate:n.target_date,nutriHeight:n.height_inches,nutriAge:n.age,nutriSex:n.sex,nutriActivity:n.activity_level,nutriGoalType:n.goal_type,nutriBodyFat:n.body_fat,nutriTargetBodyFat:n.target_body_fat,nutriMuscleGoal:n.muscle_goal,nutriMealsPerDay:n.meals_per_day,nutriRestrictionsText:n.other_restrictions,nutriDislikes:n.dislikes};
+ Object.entries(map).forEach(([id,v])=>{if(q(id)&&v!==null&&v!==undefined)q(id).value=v});
+ document.querySelectorAll('#restrictionGrid input').forEach(x=>x.checked=(n.restrictions||[]).includes(x.value));
+}
+
+function renderNutrition(){
+  const n=cache.nutrition;
+  q('dashboardMacroGrid').innerHTML=macroCardsHTML();
+  q('nutritionMacroGrid').innerHTML=macroCardsHTML();
+  
+  q('foodLogBody').innerHTML=cache.foodLogs.map(x=>`<tr><td>${esc(x.meal)}</td><td>${esc(x.food_name)}</td><td>${x.servings}</td><td>${Math.round(x.calories)}</td><td>${Math.round(x.protein)}g</td><td>${Math.round(x.carbs)}g</td><td>${Math.round(x.fat)}g</td><td><button class="text-btn delete-food" data-id="${x.id}">Delete</button></td></tr>`).join('')||'<tr><td colspan="8">No food logged today.</td></tr>';
+  if(n){
+    q('nutritionGoalSummary').innerHTML=`<strong>${Math.round(n.calories_target)} calories · ${Math.round(n.protein_target)}g protein · ${Math.round(n.carbs_target)}g carbs · ${Math.round(n.fat_target)}g fat</strong><br><span class="muted">${esc(n.goal_message||'Personalized nutrition target')}</span>`;
+    q('calculatedNutritionPlan').innerHTML=`<div class="macro-grid">${macroCardsHTML()}</div><div class="goal-summary"><strong>Goal:</strong> ${esc(n.goal_message||'Saved nutrition goal')}<br><span class="muted">Estimated maintenance: ${Math.round(n.maintenance_calories||0)} calories/day. Targets automatically stay within ForgeFit's conservative adjustment limits.</span></div>`;
+  }
+  renderFoodIdeas();renderMealPlan();prefillNutritionForm();
+}
+function calculateNutritionPlan(){
+  const weight = parseFloat(q('nutriCurrentWeight').value);
+  const target = parseFloat(q('nutriTargetWeight').value);
+  const heightIn = parseFloat(q('nutriHeight').value);
+  const age = parseInt(q('nutriAge').value, 10);
+  const sex = q('nutriSex').value || 'male';
+  const activity = parseFloat(q('nutriActivity').value || '1.55');
+  const type = q('nutriGoalType').value || 'maintain';
+  const targetDateRaw = q('nutriTargetDate').value;
+
+  if(!Number.isFinite(weight) || weight <= 0) throw new Error('Enter a valid current weight.');
+  if(!Number.isFinite(target) || target <= 0) throw new Error('Enter a valid target weight.');
+  if(!Number.isFinite(heightIn) || heightIn <= 0) throw new Error('Enter a valid height.');
+  if(!Number.isFinite(age) || age < 18) throw new Error('Enter a valid age.');
+  if(!targetDateRaw) throw new Error('Choose a target date.');
+
+  const today = new Date();
+  today.setHours(12,0,0,0);
+  const targetDate = new Date(targetDateRaw + 'T12:00:00');
+
+  if(isNaN(targetDate.getTime())) throw new Error('Choose a valid target date.');
+  if(targetDate <= today) throw new Error('Target date must be in the future.');
+
+  const kg = weight * 0.45359237;
+  const cm = heightIn * 2.54;
+
+  // Mifflin-St Jeor BMR estimate.
+  let bmr = 10 * kg + 6.25 * cm - 5 * age;
+  bmr += sex === 'female' ? -161 : 5;
+
+  const maintenance = Math.max(1200, bmr * activity);
+
+  const days = Math.max(1, Math.round((targetDate - today) / 86400000));
+  const poundsToChange = target - weight;
+
+  // Approximation for planning only.
+  let requestedDailyAdjustment = (poundsToChange * 3500) / days;
+
+  // Goal-specific conservative caps.
+  let maxDeficit = Math.min(750, maintenance * 0.20);
+  let maxSurplus = Math.min(500, maintenance * 0.15);
+
+  if(type === 'maintain'){
+    requestedDailyAdjustment = 0;
+  }else if(type === 'recomp'){
+    requestedDailyAdjustment = -Math.min(200, maintenance * 0.08);
+  }else if(type === 'lose'){
+    requestedDailyAdjustment = Math.min(0, requestedDailyAdjustment);
+  }else if(type === 'gain'){
+    requestedDailyAdjustment = Math.max(0, requestedDailyAdjustment);
+  }
+
+  const appliedAdjustment = Math.max(-maxDeficit, Math.min(maxSurplus, requestedDailyAdjustment));
+  const calories = Math.max(1200, Math.round(maintenance + appliedAdjustment));
+
+  // Protein target does NOT depend on optional body-fat fields.
+  let proteinGPerKg = 1.6;
+  if(type === 'gain') proteinGPerKg = 1.7;
+  if(type === 'lose' || type === 'recomp') proteinGPerKg = 1.8;
+
+  const protein = Math.max(50, Math.round(kg * proteinGPerKg));
+  const fat = Math.max(40, Math.round((calories * 0.25) / 9));
+  const carbs = Math.max(0, Math.round((calories - protein * 4 - fat * 9) / 4));
+
+  const wasLimited =
+    requestedDailyAdjustment < -maxDeficit ||
+    requestedDailyAdjustment > maxSurplus;
+
+  let message;
+  if(wasLimited && Math.abs(poundsToChange) > 0){
+    const safeDaily = Math.abs(appliedAdjustment) || 1;
+    const realisticDays = Math.ceil(Math.abs(poundsToChange * 3500) / safeDaily);
+    const realisticDate = new Date(today);
+    realisticDate.setDate(realisticDate.getDate() + realisticDays);
+    message = `Your requested pace is more aggressive than ForgeFit's planning limit. These targets use a more moderate pace, with an estimated goal date around ${realisticDate.toLocaleDateString()}.`;
+  }else{
+    message = `These starting targets are designed around reaching approximately ${target} lb by ${targetDate.toLocaleDateString()}.`;
+  }
+
+  return {
+    weight,
+    target,
+    calories,
+    protein,
+    carbs,
+    fat,
+    maintenance: Math.round(maintenance),
+    message
+  };
+}
+function mealTemplates(){
+  const foods=allowedFoods();
+  const find=(names)=>names.map(n=>foods.find(f=>f.name===n)).filter(Boolean);
+  const templates=[
+    {name:'Eggs + oats + banana',foods:find(['Eggs','Oatmeal, dry','Banana'])},
+    {name:'Greek yogurt + oats + banana',foods:find(['Greek yogurt, nonfat','Oatmeal, dry','Banana'])},
+    {name:'Chicken rice bowl',foods:find(['Chicken breast, cooked','White rice, cooked','Avocado'])},
+    {name:'Turkey sandwich + fruit',foods:find(['Turkey breast','Whole wheat bread','Banana'])},
+    {name:'Beef + potato',foods:find(['Lean ground beef 93/7','Potato, baked','Olive oil'])},
+    {name:'Salmon + rice',foods:find(['Salmon','Brown rice, cooked'])},
+    {name:'Tofu rice bowl',foods:find(['Tofu, firm','White rice, cooked','Avocado'])},
+    {name:'Lentils + rice',foods:find(['Lentils, cooked','Brown rice, cooked'])},
+    {name:'Protein shake + banana',foods:find(['Whey protein','Banana'])},
+    {name:'Cottage cheese + banana',foods:find(['Cottage cheese','Banana'])}
+  ].filter(t=>t.foods.length>=2);
+  return templates;
+}
+function generateMealPlanData(){
+  const n=cache.nutrition;if(!n)return null;
+  const templates=mealTemplates();if(!templates.length)return null;
+  const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], meals=Number(n.meals_per_day||4);
+  const plan=days.map((day,di)=>{
+    let picked=[];
+    for(let i=0;i<meals;i++) picked.push(templates[(di*2+i)%templates.length]);
+    const base=picked.reduce((a,t)=>a+t.foods.reduce((s,f)=>s+f.cal,0),0);
+    const scale=Math.max(.6,Math.min(2,(n.calories_target||2000)/(base||2000)));
+    return {day,meals:picked.map((t,mi)=>({name:t.name,foods:t.foods.map(f=>({name:f.name,serving:f.serving,qty:Math.round(scale*4)/4,cal:Math.round(f.cal*scale),p:Math.round(f.p*scale),c:Math.round(f.c*scale),f:Math.round(f.f*scale)}))}))};
+  });
+  return plan;
+}
+function renderMealPlan(){
+  const plan=cache.mealPlan?.plan;
+  if(!plan){q('mealPlanHost').innerHTML='<p class="muted">Set your nutrition goal, then generate a meal plan.</p>';q('groceryHost').innerHTML='<p class="muted">Generate a weekly meal plan first.</p>';return}
+  q('mealPlanHost').innerHTML=plan.map(d=>`<div class="meal-day"><h4>${d.day}</h4>${d.meals.map((m,i)=>{const totals=m.foods.reduce((a,f)=>{a.cal+=f.cal;a.p+=f.p;a.c+=f.c;a.f+=f.f;return a},{cal:0,p:0,c:0,f:0});return `<div class="meal-item"><div><strong>${['Breakfast','Lunch','Dinner','Snack','Meal 5','Meal 6'][i]||'Meal'}: ${esc(m.name)}</strong><br><span>${m.foods.map(f=>`${f.qty}× ${esc(f.name)}`).join(' · ')}</span></div><div style="text-align:right">${totals.cal} cal<br><span>${totals.p}P · ${totals.c}C · ${totals.f}F</span></div></div>`}).join('')}</div>`).join('');
+  const grocery={};plan.forEach(d=>d.meals.forEach(m=>m.foods.forEach(f=>{grocery[f.name]=(grocery[f.name]||0)+Number(f.qty)})));
+  q('groceryHost').innerHTML=Object.entries(grocery).sort((a,b)=>a[0].localeCompare(b[0])).map(([name,qty])=>`<div class="grocery-item"><strong>${esc(name)}</strong><br><span class="muted">Approx. ${Math.round(qty*4)/4} listed servings for the week</span></div>`).join('');
+}
+
+function renderPlan(){q('weekPlan').innerHTML=Object.entries(PL).map(([day,p])=>`<article class="card day-card"><div class="day-head"><div><h3>${day[0].toUpperCase()+day.slice(1)} — ${p[0]}</h3><p class="muted">10 min cardio warm-up${day==='friday'?' + 20 min extra cardio':''}</p></div><span class="day-badge">${day==='friday'?'Legs + Abs + Cardio':'Upper Body'}</span></div><table><thead><tr><th>Exercise</th><th>Muscle</th><th>Sets</th><th>Reps</th><th>Equipment</th><th></th></tr></thead><tbody>${p[1].map(x=>`<tr><td>${x[0]}</td><td>${EX[x[0]][0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td><td><button class="chip quick-log" data-ex="${x[0]}" data-sets="${x[1]}" data-reps="${x[2]}">Log</button></td></tr>`).join('')}</tbody></table></article>`).join('')}
+const latestWeight=()=>cache.weights.length?Number(cache.weights[cache.weights.length-1].weight):null,waterToday=()=>cache.water.filter(x=>x.logged_at===iso()).reduce((a,x)=>a+Number(x.ounces),0);function render(){renderPlan();const day=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][new Date().getDay()],p=PL[day]||PL.monday,w=latestWeight();q('heroWorkoutTitle').textContent=p[0];q('todayWorkoutName').textContent=p[0];q('todayExercises').innerHTML=[['Cardio','10 minutes','C'],...p[1].slice(0,5).map(x=>[x[0],`${x[1]} sets × ${x[2]} reps`,EX[x[0]][0][0]])].map(x=>`<div class="exercise-row"><div class="exercise-icon">${x[2]}</div><div><strong>${x[0]}</strong><span>${x[1]}</span></div></div>`).join('');q('currentWeight').textContent=w?fmt(w,1)+' lb':'—';if(cache.weights.length>=2){let d=Number(cache.weights.at(-1).weight)-Number(cache.weights[0].weight);q('weightDelta').textContent=(d>=0?'+':'')+fmt(d,1)+' lb from first log'}const ms=new Date();ms.setDate(1);ms.setHours(0,0,0,0);const ml=cache.lifts.filter(x=>new Date(x.workout_date)>=ms);q('monthWorkouts').textContent=new Set(ml.map(x=>x.workout_date)).size;q('monthVolume').textContent=fmt(ml.reduce((a,x)=>a+Number(x.weight||0)*Number(x.sets||0)*Number(x.reps||0),0))+' lb';const mw=cache.weights.filter(x=>new Date(x.logged_at)>=ms);q('monthWeightChange').textContent=mw.length>=2?((Number(mw.at(-1).weight)-Number(mw[0].weight)>=0?'+':'')+fmt(Number(mw.at(-1).weight)-Number(mw[0].weight),1)+' lb'):'—';const ws=new Date();ws.setDate(ws.getDate()-((ws.getDay()+6)%7));q('weeklyComplete').textContent=Math.min(new Set(cache.lifts.filter(x=>new Date(x.workout_date)>=ws).map(x=>x.workout_date)).size,5)+'/5';renderWater();renderNotes();renderLifts();populate();renderRewards();renderNutrition()}
+function renderWater(){const oz=waterToday(),pct=Math.min(100,Math.round(oz));['waterRing','waterRingLarge'].forEach(id=>q(id).style.setProperty('--pct',pct+'%'));q('waterPercent').textContent=pct+'%';q('waterPercentLarge').textContent=pct+'%';q('waterToday').textContent=oz+' oz';q('waterOzBig').textContent=oz;q('waterLargeCurrent').textContent=oz;let arr=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=iso(d),v=cache.water.filter(x=>x.logged_at===k).reduce((a,x)=>a+Number(x.ounces),0);arr.push(`<div class="note-card"><strong>${d.toLocaleDateString(undefined,{weekday:'short'})}</strong><p>${v} oz</p></div>`)}q('waterHistory').innerHTML=arr.join('')}function renderNotes(){q('notesList').innerHTML=cache.notes.map(n=>`<div class="note-card"><div class="meta"><strong>${esc(n.exercise)}</strong><span>${esc(n.category)}</span></div><p>${esc(n.note)}</p></div>`).join('')||'<p class="muted">No notes yet.</p>';q('recentNotes').innerHTML=cache.notes.slice(0,3).map(n=>`<div class="note-card"><strong>${esc(n.exercise)}</strong><p>${esc(n.note)}</p></div>`).join('')||'<p class="muted">No notes yet.</p>'}function renderLifts(){q('liftHistoryBody').innerHTML=cache.lifts.slice(0,30).map(l=>`<tr><td>${l.workout_date}</td><td>${esc(l.exercise)}</td><td>${l.weight||0} lb</td><td>${l.sets} × ${l.reps}</td><td>${fmt(e1rm(Number(l.weight||0),Number(l.reps||1)))} lb</td></tr>`).join('')||'<tr><td colspan="5">No lifts yet.</td></tr>'}function populate(){const o=Object.keys(EX).map(x=>`<option>${x}</option>`).join('');q('liftExercise').innerHTML=o;q('recommendExercise').innerHTML=o}
+q('weightDateInput').value=iso();q('liftDate').value=iso();document.querySelectorAll('.water-add').forEach(b=>b.onclick=async()=>{await sb.from('water_logs').insert({user_id:user.id,ounces:Number(b.dataset.oz),logged_at:iso()});await load();render()});q('weightForm').onsubmit=async e=>{e.preventDefault();const date=q('weightDateInput').value,weight=Number(q('bodyWeightInput').value);await sb.from('weight_logs').delete().eq('user_id',user.id).eq('logged_at',date);const {error}=await sb.from('weight_logs').insert({user_id:user.id,weight,logged_at:date});if(error)return alert(error.message);q('bodyWeightInput').value='';await load();render()};q('noteForm').onsubmit=async e=>{e.preventDefault();const {error}=await sb.from('notes').insert({user_id:user.id,exercise:q('noteExercise').value,category:q('noteCategory').value,note:q('noteText').value});if(error)return alert(error.message);e.target.reset();await load();render()};
+const openModal=()=>q('logDialog').classList.add('open'),closeModal=()=>q('logDialog').classList.remove('open');q('logWorkoutBtn').onclick=openModal;q('closeDialog').onclick=closeModal;document.addEventListener('click',e=>{if(e.target.classList.contains('quick-log')){q('liftExercise').value=e.target.dataset.ex;q('liftSets').value=e.target.dataset.sets;q('liftReps').value=e.target.dataset.reps;openModal()}});q('liftForm').onsubmit=async e=>{e.preventDefault();const {error}=await sb.from('workout_logs').insert({user_id:user.id,exercise:q('liftExercise').value,weight:Number(q('liftWeight').value),sets:Number(q('liftSets').value),reps:Number(q('liftReps').value),workout_date:q('liftDate').value});if(error)return alert(error.message);closeModal();q('liftWeight').value='';await load();render()};q('recommendForm').onsubmit=e=>{e.preventDefault();const ex=q('recommendExercise').value,reps=Number(q('recommendReps').value),hist=cache.lifts.filter(x=>x.exercise===ex);let t;if(hist.length){const best=Math.max(...hist.map(x=>e1rm(Number(x.weight||0),Number(x.reps||1)))),pct=reps<=5?.82:reps<=8?.75:reps<=12?.67:.6;t=`<strong>${Math.round(best*pct/5)*5} lb</strong><p class="muted">Based on your estimated 1RM of about ${fmt(best)} lb.</p>`}else{const bw=latestWeight();t=bw?`<strong>${Math.round(bw*(EX[ex][1]||.4)/5)*5} lb</strong><p class="muted">Rough starting reference based on body weight.</p>`:'Log a lift or body weight first.'}q('recommendResult').innerHTML=t};
+async function loadAdmin(){if(profile?.role!=='admin')return;const [p,s,w]=await Promise.all([sb.from('profiles').select('*').order('created_at',{ascending:false}),sb.from('subscriptions').select('*'),sb.from('workout_logs').select('*').order('created_at',{ascending:false}).limit(100)]);if(p.error||s.error||w.error){q('adminMembersBody').innerHTML='<tr><td colspan="6">Run the ForgeFit admin policy SQL in Supabase first.</td></tr>';return}const profiles=p.data||[],subs=s.data||[],workouts=w.data||[],sm=Object.fromEntries(subs.map(x=>[x.user_id,x]));q('adminUsers').textContent=profiles.length;q('adminActive').textContent=subs.filter(x=>['active','trialing'].includes(x.status)).length;q('adminWorkouts').textContent=workouts.length;const annual=subs.filter(x=>['active','trialing'].includes(x.status)).reduce((a,x)=>a+(x.plan===PRICES.monthly?120:x.plan===PRICES.six?110:x.plan===PRICES.annual?80:0),0);q('adminRevenue').textContent='$'+fmt(annual/12);q('adminMembersBody').innerHTML=profiles.map(p=>{const s=sm[p.id]||{},plan=s.plan===PRICES.monthly?'$10 Monthly':s.plan===PRICES.six?'$55 / 6 mo':s.plan===PRICES.annual?'$80 Annual':'—';return `<tr><td>${esc(p.full_name||'—')}</td><td>${esc(p.email||'—')}</td><td>${p.role}</td><td>${plan}</td><td><span class="status ${['active','trialing'].includes(s.status)?'':'inactive'}">${s.status||'inactive'}</span></td><td>${new Date(p.created_at).toLocaleDateString()}</td></tr>`}).join('');const names=Object.fromEntries(profiles.map(x=>[x.id,x.full_name||x.email||x.id]));q('adminWorkoutBody').innerHTML=workouts.map(x=>`<tr><td>${esc(names[x.user_id]||x.user_id)}</td><td>${x.workout_date}</td><td>${esc(x.exercise)}</td><td>${x.weight||0} lb</td><td>${x.sets} × ${x.reps}</td></tr>`).join('')}
+
+
+
+
+
+let smartFoodSelectedFood = null;
+let smartFoodSearchTimer = null;
+let smartFoodResults = [];
+
+function numericNutrient(obj, keys){
+  for(const key of keys){
+    const v = obj?.[key];
+    if(v !== undefined && v !== null && v !== "" && Number.isFinite(Number(v))){
+      return Number(v);
+    }
+  }
+  return 0;
+}
+
+function normalizeFoodSearchProduct(product){
+  const n = product?.nutriments || {};
+  const servingQtyRaw = product?.serving_quantity;
+  const servingQty = Number.isFinite(Number(servingQtyRaw)) ? Number(servingQtyRaw) : null;
+
+  const name =
+    product?.product_name ||
+    product?.generic_name ||
+    product?.abbreviated_product_name ||
+    "Unnamed food";
+
+  const brand = product?.brands ? String(product.brands).split(",")[0].trim() : "";
+
+  return {
+    name: brand ? `${name} — ${brand}` : name,
+    code: product?.code || null,
+    servingSizeText: product?.serving_size || null,
+    servingGrams: servingQty,
+    cal100: numericNutrient(n, ["energy-kcal_100g", "energy-kcal"]),
+    p100: numericNutrient(n, ["proteins_100g", "proteins"]),
+    c100: numericNutrient(n, ["carbohydrates_100g", "carbohydrates"]),
+    f100: numericNutrient(n, ["fat_100g", "fat"])
+  };
+}
+
+function smartFoodMacros(food, amount, type){
+  let grams = 0;
+
+  if(type === "servings"){
+    const servingGrams = food.servingGrams || 100;
+    grams = amount * servingGrams;
+  }else{
+    grams = amount * 28.349523125;
+  }
+
+  const factor = grams / 100;
+
+  return {
+    grams,
+    calories: food.cal100 * factor,
+    protein: food.p100 * factor,
+    carbs: food.c100 * factor,
+    fat: food.f100 * factor
+  };
+}
+
+function renderSmartFoodCalculation(){
+  if(!smartFoodSelectedFood) return;
+
+  const amount = Number(q("smartFoodAmount").value || 0);
+  const type = q("smartFoodAmountType").value;
+  const m = smartFoodMacros(smartFoodSelectedFood, amount, type);
+
+  const typeText = type === "servings"
+    ? `${amount || 0} serving${amount === 1 ? "" : "s"}`
+    : `${amount || 0} oz`;
+
+  q("smartFoodCalculated").innerHTML = `
+    <strong>${typeText} · ${Math.round(m.grams)} g</strong>
+    <p style="margin:7px 0 0">
+      ${Math.round(m.calories)} cal ·
+      ${Math.round(m.protein * 10) / 10}g protein ·
+      ${Math.round(m.carbs * 10) / 10}g carbs ·
+      ${Math.round(m.fat * 10) / 10}g fat
+    </p>
+  `;
+}
+
+function selectSmartFood(index){
+  const food = smartFoodResults[index];
+  if(!food) return;
+
+  smartFoodSelectedFood = food;
+  q("smartFoodSearch").value = food.name;
+  q("smartFoodSuggestions").classList.add("hidden");
+  q("smartFoodSelected").classList.remove("hidden");
+
+  q("smartFoodSelectedName").textContent = food.name;
+
+  const servingInfo = food.servingSizeText
+    ? ` · listed serving: ${food.servingSizeText}`
+    : "";
+
+  q("smartFoodSelectedBase").textContent =
+    `Per 100 g: ${Math.round(food.cal100)} cal · ` +
+    `${Math.round(food.p100 * 10) / 10}g protein · ` +
+    `${Math.round(food.c100 * 10) / 10}g carbs · ` +
+    `${Math.round(food.f100 * 10) / 10}g fat${servingInfo}`;
+
+  // If there is no serving size data, default to ounces and disable servings.
+  const amountType = q("smartFoodAmountType");
+  const servingsOption = amountType.querySelector('option[value="servings"]');
+
+  if(food.servingGrams){
+    servingsOption.disabled = false;
+  }else{
+    if(amountType.value === "servings") amountType.value = "ounces";
+    servingsOption.disabled = true;
+  }
+
+  q("smartFoodOuncesLabel").firstChild.textContent =
+    amountType.value === "servings" ? "Number of servings " : "Amount (oz) ";
+
+  renderSmartFoodCalculation();
+}
+
+async function fetchSmartFoodSuggestions(term){
+  if(term.trim().length < 2){
+    q("smartFoodSuggestions").classList.add("hidden");
+    q("smartFoodStatus").textContent = "";
+    return;
+  }
+
+  q("smartFoodStatus").textContent = "Searching…";
+
+  try{
+    const { data, error } = await sb.functions.invoke("food-search", {
+      body: { query: term.trim() }
+    });
+
+    if(error) throw error;
+
+    smartFoodResults = Array.isArray(data?.results)
+      ? data.results.slice(0, 10)
+      : [];
+
+    if(!smartFoodResults.length){
+      q("smartFoodSuggestions").classList.add("hidden");
+      q("smartFoodStatus").textContent = "No matches found. Try a simpler search.";
+      return;
+    }
+
+    q("smartFoodSuggestions").innerHTML = smartFoodResults.map((f,i)=>`
+      <button type="button" class="autocomplete-item smart-food-choice" data-index="${i}">
+        <div>
+          <strong>${esc(f.name)}</strong>
+          <span>
+            ${Math.round(f.cal100)} cal / 100g ·
+            ${Math.round(f.p100*10)/10}P ·
+            ${Math.round(f.c100*10)/10}C ·
+            ${Math.round(f.f100*10)/10}F
+          </span>
+        </div>
+        <em>Select</em>
+      </button>
+    `).join("");
+
+    q("smartFoodSuggestions").classList.remove("hidden");
+    q("smartFoodStatus").textContent = "";
+
+  }catch(err){
+    console.error("Food autocomplete error:", err);
+    q("smartFoodSuggestions").classList.add("hidden");
+    q("smartFoodStatus").textContent =
+      "Food search is temporarily unavailable. Try again in a moment.";
+  }
+}
+
+q("smartFoodSearch").addEventListener("input", e => {
+  const term = e.target.value;
+
+  smartFoodSelectedFood = null;
+  q("smartFoodSelected").classList.add("hidden");
+
+  clearTimeout(smartFoodSearchTimer);
+  smartFoodSearchTimer = setTimeout(() => {
+    fetchSmartFoodSuggestions(term);
+  }, 300);
+});
+
+document.addEventListener("click", e => {
+  const choice = e.target.closest(".smart-food-choice");
+  if(choice){
+    selectSmartFood(Number(choice.dataset.index));
+    return;
+  }
+
+  // Close suggestions when tapping elsewhere.
+  if(
+    !e.target.closest("#smartFoodSuggestions") &&
+    !e.target.closest("#smartFoodSearch")
+  ){
+    q("smartFoodSuggestions").classList.add("hidden");
+  }
+});
+
+q("smartFoodAmountType").addEventListener("change", () => {
+  q("smartFoodOuncesLabel").firstChild.textContent =
+    q("smartFoodAmountType").value === "servings"
+      ? "Number of servings "
+      : "Amount (oz) ";
+
+  q("smartFoodAmount").value =
+    q("smartFoodAmountType").value === "servings" ? "1" : "4";
+
+  renderSmartFoodCalculation();
+});
+
+q("smartFoodAmount").addEventListener("input", renderSmartFoodCalculation);
+
+q("smartFoodAddBtn").onclick = async () => {
+  if(!smartFoodSelectedFood){
+    alert("Search for and select a food or drink first.");
+    return;
+  }
+
+  const amount = Number(q("smartFoodAmount").value);
+  if(!Number.isFinite(amount) || amount <= 0){
+    alert("Enter a valid amount.");
+    return;
+  }
+
+  const type = q("smartFoodAmountType").value;
+  const m = smartFoodMacros(smartFoodSelectedFood, amount, type);
+
+  const amountLabel =
+    type === "servings"
+      ? `${amount} serving${amount === 1 ? "" : "s"}`
+      : `${amount} oz`;
+
+  const { error } = await sb.from("food_logs").insert({
+    user_id: user.id,
+    logged_at: iso(),
+    meal: q("smartFoodMeal").value,
+    food_name: `${smartFoodSelectedFood.name} (${amountLabel})`,
+    servings: amount,
+    calories: m.calories,
+    protein: m.protein,
+    carbs: m.carbs,
+    fat: m.fat
+  });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  q("smartFoodSearch").value = "";
+  q("smartFoodSelected").classList.add("hidden");
+  q("smartFoodSuggestions").classList.add("hidden");
+  q("smartFoodStatus").textContent = "Added to today's food log.";
+  smartFoodSelectedFood = null;
+
+  await load();
+  renderNutrition();
+};
+
+document.querySelectorAll('.nutri-tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nutri-tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.nutri-panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.nutri))});
+q('nutritionGoalForm').onsubmit = async (e) => {
+  e.preventDefault();
+
+  const resultBox = q('calculatedNutritionPlan');
+
+  try {
+    const plan = calculateNutritionPlan();
+
+    // Show the result immediately, before any database call.
+    resultBox.innerHTML = `
+      <div class="macro-grid">
+        <div class="macro-card">
+          <span>Calories</span>
+          <strong>${plan.calories}</strong>
+          <small>per day</small>
+        </div>
+        <div class="macro-card">
+          <span>Protein</span>
+          <strong>${plan.protein}g</strong>
+          <small>per day</small>
+        </div>
+        <div class="macro-card">
+          <span>Carbs</span>
+          <strong>${plan.carbs}g</strong>
+          <small>per day</small>
+        </div>
+        <div class="macro-card">
+          <span>Fat</span>
+          <strong>${plan.fat}g</strong>
+          <small>per day</small>
+        </div>
+      </div>
+      <div class="goal-summary">
+        <strong>Your ForgeFit nutrition target</strong><br>
+        <span class="muted">${esc(plan.message)}</span><br><br>
+        <span class="muted">Estimated maintenance: ${plan.maintenance} calories/day</span>
+      </div>`;
+
+    const restrictions = Array.from(
+      document.querySelectorAll('#restrictionGrid input:checked')
+    ).map(x => x.value);
+
+    const bodyFatValue = q('nutriBodyFat').value.trim();
+    const targetBodyFatValue = q('nutriTargetBodyFat').value.trim();
+    const muscleGoalValue = q('nutriMuscleGoal').value.trim();
+    const otherRestrictionsValue = q('nutriRestrictionsText').value.trim();
+    const dislikesValue = q('nutriDislikes').value.trim();
+
+    const row = {
+      user_id: user.id,
+      current_weight: plan.weight,
+      target_weight: plan.target,
+      target_date: q('nutriTargetDate').value,
+      height_inches: Number(q('nutriHeight').value),
+      age: Number(q('nutriAge').value),
+      sex: q('nutriSex').value || 'male',
+      activity_level: Number(q('nutriActivity').value || 1.55),
+      goal_type: q('nutriGoalType').value || 'maintain',
+
+      // Optional fields stay null/empty if the user leaves them blank.
+      body_fat: bodyFatValue === '' ? null : Number(bodyFatValue),
+      target_body_fat: targetBodyFatValue === '' ? null : Number(targetBodyFatValue),
+      muscle_goal: muscleGoalValue === '' ? null : muscleGoalValue,
+      meals_per_day: Number(q('nutriMealsPerDay').value || 4),
+      restrictions: restrictions,
+      other_restrictions: otherRestrictionsValue === '' ? null : otherRestrictionsValue,
+      dislikes: dislikesValue === '' ? null : dislikesValue,
+
+      maintenance_calories: plan.maintenance,
+      calories_target: plan.calories,
+      protein_target: plan.protein,
+      carbs_target: plan.carbs,
+      fat_target: plan.fat,
+      goal_message: plan.message,
+      updated_at: new Date().toISOString()
+    };
+
+    const { error } = await sb
+      .from('nutrition_profiles')
+      .upsert(row, { onConflict: 'user_id' });
+
+    if(error){
+      console.error('Nutrition save error:', error);
+      resultBox.innerHTML += `
+        <div class="warning" style="margin-top:12px">
+          Your macros were calculated successfully, but ForgeFit could not save them to your account yet:
+          ${esc(error.message)}
+        </div>`;
+      return;
+    }
+
+    // Update local cache so the page updates instantly without depending on a reload.
+    cache.nutrition = row;
+    renderNutrition();
+
+  } catch (err) {
+    console.error('Nutrition calculator error:', err);
+    resultBox.innerHTML = `
+      <div class="warning">
+        ${esc(err && err.message ? err.message : 'ForgeFit could not calculate your targets.')}
+      </div>`;
+  }
+};
+
+document.addEventListener('click',async e=>{if(e.target.classList.contains('delete-food')){await sb.from('food_logs').delete().eq('id',e.target.dataset.id).eq('user_id',user.id);await load();renderNutrition()}});
+q('generateMealPlanBtn').onclick=async()=>{if(!cache.nutrition)return alert('Set your nutrition goals first.');const plan=generateMealPlanData();if(!plan)return alert('No meal templates match your restrictions.');const monday=new Date();monday.setDate(monday.getDate()-((monday.getDay()+6)%7));const row={user_id:user.id,week_start:iso(monday),plan};const {error}=await sb.from('meal_plans').insert(row);if(error)return alert(error.message);await load();renderNutrition()};
+
+q('refreshAdmin').onclick=loadAdmin;document.querySelectorAll('.subscribe-btn').forEach(b=>b.onclick=async()=>{q('subscriptionMsg').textContent='Opening secure checkout…';const {data,error}=await sb.functions.invoke('create-checkout-session',{body:{priceId:b.dataset.price}});if(error){q('subscriptionMsg').textContent=error.message;return}if(data?.url)location.href=data.url});
+q('manageMembershipBtn').onclick=async()=>{
+  q('manageMembershipBtn').disabled=true;
+  const old=q('manageMembershipBtn').textContent;
+  q('manageMembershipBtn').textContent='Opening Billing…';
+  try{
+    const {data,error}=await sb.functions.invoke('create-portal-session');
+    if(error) throw error;
+    if(!data?.url) throw new Error(data?.error||'No billing portal URL returned.');
+    location.href=data.url;
+  }catch(err){
+    alert(err.message||'Unable to open billing portal.');
+    q('manageMembershipBtn').disabled=false;
+    q('manageMembershipBtn').textContent=old;
+  }
+};
+async function logout(){await sb.auth.signOut();showOnly('authScreen')}q('logoutBtn').onclick=logout;q('desktopLogout').onclick=logout;q('subscriptionLogout').onclick=logout;q('todayLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'});sb.auth.onAuthStateChange(()=>setTimeout(route,0));(async()=>{await route();if(location.search.includes('subscription=success')){history.replaceState({},'',location.pathname);setTimeout(route,1200)}})();
+</script></body></html>
